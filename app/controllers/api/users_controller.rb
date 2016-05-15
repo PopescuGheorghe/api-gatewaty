@@ -2,6 +2,9 @@ require_relative '../../gateway/users'
 module Api
   class UsersController < ApplicationController
     before_action :set_user
+    before_action do
+      authenticate(request.headers['Authorization'])
+    end
 
     def me
       response = @user.me

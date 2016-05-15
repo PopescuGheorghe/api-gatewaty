@@ -1,4 +1,4 @@
 class Gateway
   include HTTParty
-  base_uri 'localhost:4000'
+  base_uri 'localhost:3001'
 end
