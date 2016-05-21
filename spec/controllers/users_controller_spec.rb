@@ -3,13 +3,11 @@ require 'spec_helper'
 describe Api::UsersController, type: :controller do
   before :each do
     @base_uri = ENV['user_service']
-  end
-
-  before :each do
     @token = '1234qwe'
     request.headers['Authorization'] = @token
     allow_any_instance_of(Api::UsersController).to receive(:authenticate).and_return true
   end
+
   context 'me' do
     it 'calls get /api/users/me' do
       stub_request(:get, "#{@base_uri}/api/users/me")
