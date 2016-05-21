@@ -1,4 +1,6 @@
 class Users < Gateway
+  base_uri ENV['user_service']
+
   def initialize(token)
     self.class.headers 'Authorization' => token.to_s
   end

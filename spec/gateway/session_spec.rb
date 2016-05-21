@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Session do
   context 'login' do
     it 'calls user service post sessions' do
-      stub_request(:post, "#{Gateway.base_uri}/api/sessions")
+      stub_request(:post, "#{ENV['user_service']}/api/sessions")
         .with(body: 'email=email%40example.com&password=password')
         .to_return(status: 200, body: 'success', headers: {})
 
@@ -15,7 +15,7 @@ RSpec.describe Session do
   context 'logout' do
     it 'calls user sessions destroy session' do
       token = '123qwe'
-      stub_request(:delete, "#{Gateway.base_uri}/api/sessions/#{token}")
+      stub_request(:delete, "#{ENV['user_service']}/api/sessions/#{token}")
         .to_return(status: 200, body: 'success', headers: {})
 
       response = Session.new.logout(token)

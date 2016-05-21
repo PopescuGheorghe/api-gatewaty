@@ -7,6 +7,8 @@ gem 'rails-api'
 
 gem 'httparty'
 
+gem 'figaro'
+
 # Use respond_to
 gem 'responders', '~> 2.0'
 

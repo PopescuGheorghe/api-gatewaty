@@ -1,5 +1,5 @@
 class Authorization < Gateway
-  base_uri 'localhost:3002'
+  base_uri ENV['authorization_service']
 
   def initialize(token)
     self.class.headers 'Authorization' => token.to_s

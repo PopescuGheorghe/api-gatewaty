@@ -1,4 +1,6 @@
 class Session < Gateway
+  base_uri ENV['user_service']
+
   def login(email, password)
     self.class.post(
       '/api/sessions',

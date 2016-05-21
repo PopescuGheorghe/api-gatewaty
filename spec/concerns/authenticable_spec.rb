@@ -7,6 +7,9 @@ end
 describe Authenticable, type: :controller do
   let(:authentication) { Authentication.new }
   subject { authentication }
+  before :each do
+    @base_uri = ENV['authorization_service']
+  end
 
   describe 'unauthorized authentication' do
     before do
@@ -43,7 +46,7 @@ describe Authenticable, type: :controller do
   describe 'validate' do
     it 'validates token' do
       token = '124qwe'
-      stub_request(:post, "http://localhost:3002/authorize").
+      stub_request(:post, "#{@base_uri}/authorize").
          with(:headers => {'Authorization'=>'124qwe'}).
          to_return(:status => 200, :body => { success: true }.to_json, :headers => {})
       response = authentication.validate(token)

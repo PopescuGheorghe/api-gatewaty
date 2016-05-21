@@ -2,13 +2,17 @@ require 'spec_helper'
 
 describe Api::UsersController, type: :controller do
   before :each do
+    @base_uri = ENV['user_service']
+  end
+
+  before :each do
     @token = '1234qwe'
     request.headers['Authorization'] = @token
     allow_any_instance_of(Api::UsersController).to receive(:authenticate).and_return true
   end
   context 'me' do
     it 'calls get /api/users/me' do
-      stub_request(:get, "#{Gateway.base_uri}/api/users/me")
+      stub_request(:get, "#{@base_uri}/api/users/me")
         .with(headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
 
@@ -19,7 +23,7 @@ describe Api::UsersController, type: :controller do
 
   context 'index' do
     it 'calls get /api/users' do
-      stub_request(:get, "#{Gateway.base_uri}/api/users")
+      stub_request(:get, "#{@base_uri}/api/users")
         .with(headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
 
@@ -31,7 +35,7 @@ describe Api::UsersController, type: :controller do
   context 'show' do
     it 'calls get /api/users/:id' do
       id = 1
-      stub_request(:get, "#{Gateway.base_uri}/api/users/#{id}")
+      stub_request(:get, "#{@base_uri}/api/users/#{id}")
         .with(headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
 
@@ -44,7 +48,7 @@ describe Api::UsersController, type: :controller do
     it 'calls post /api/users' do
       email = 'email@example.com'
       password = 'password'
-      stub_request(:post, "#{Gateway.base_uri}/api/users")
+      stub_request(:post, "#{@base_uri}/api/users")
         .with(headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
 
@@ -58,7 +62,7 @@ describe Api::UsersController, type: :controller do
       email = 'email@example.com'
       password = 'password'
       id = 1
-      stub_request(:patch, "#{Gateway.base_uri}/api/users/1")
+      stub_request(:patch, "#{@base_uri}/api/users/1")
         .with(body: 'email=email%40example.com&password=password',
               headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
@@ -71,7 +75,7 @@ describe Api::UsersController, type: :controller do
   context 'destroy' do
     it 'calls delete /api/users/:id' do
       id = 1
-      stub_request(:delete, "#{Gateway.base_uri}/api/users/#{id}")
+      stub_request(:delete, "#{@base_uri}/api/users/#{id}")
         .with(headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
 
