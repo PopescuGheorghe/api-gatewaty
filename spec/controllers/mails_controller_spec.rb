@@ -13,7 +13,7 @@ describe Api::MailsController, type: :controller do
         .with(headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
 
-      post :send_email, email: "test@example.com"
+      post :send_email, email: 'test@example.com'
       expect(response.status).to eq 200
     end
   end
@@ -21,11 +21,13 @@ describe Api::MailsController, type: :controller do
     it 'renders unauthorized' do
       token = '1234'
       request.headers['Authorization'] = @token
-      WebMock.disable_net_connect!(allow_localhost: true)
+      stub_request(:post, "#{ENV['authorization_service']}/authorize")
+        .with(headers: { 'Authorization' => '1234qwe' })
+        .to_return(status: 401, body: '{"sucess": false}', headers: { 'Content-Type' => 'application/json' })
 
-      expected_response = { "sucess" => false, "errors" => ['Unauthorized access'] }
+      expected_response = { 'sucess' => false, 'errors' => ['Unauthorized access'] }
 
-      post :send_email, email: "test@example.com"
+      post :send_email, email: 'test@example.com'
       parsed_response = JSON.parse(response.body)
 
       expect(parsed_response).to eql expected_response

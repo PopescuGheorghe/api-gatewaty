@@ -46,11 +46,11 @@ describe Authenticable, type: :controller do
   describe 'validate' do
     it 'validates token' do
       token = '124qwe'
-      stub_request(:post, "#{@base_uri}/authorize").
-         with(:headers => {'Authorization'=>'124qwe'}).
-         to_return(:status => 200, :body => { success: true }.to_json, :headers => {})
+      stub_request(:post, "#{@base_uri}/authorize")
+        .with(headers: { 'Authorization' => '124qwe' })
+        .to_return(status: 200, body: { success: true }.to_json, headers: {})
       response = authentication.validate(token)
-      expect(response).to eql "success"
+      expect(response).to eql 'success'
     end
   end
 end

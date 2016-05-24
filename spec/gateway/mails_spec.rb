@@ -7,7 +7,7 @@ RSpec.describe Users do
   end
   context 'send_email' do
     it 'calls post /api/mails' do
-      email = "test@example.com"
+      email = 'test@example.com'
       stub_request(:post, "#{@base_uri}/api/mails")
         .with(headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})

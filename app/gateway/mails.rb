@@ -7,9 +7,8 @@ class Mails < Gateway
 
   def send_welcome_email(email)
     self.class.post('/api/mails',
-      body: {
-        email: email
-      }
-    )
+                    body: {
+                      email: email
+                    })
   end
 end
