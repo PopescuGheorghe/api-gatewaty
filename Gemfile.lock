@@ -172,7 +172,7 @@ DEPENDENCIES
   figaro
   httparty
   pry-byebug
-  rails (= 4.2.6)
+  rails
   rails-api
   responders (~> 2.0)
   rspec-rails
@@ -182,5 +182,8 @@ DEPENDENCIES
   timecop
   webmock
 
+RUBY VERSION
+   ruby 2.3.0p0
+
 BUNDLED WITH
-   1.11.2
+   1.12.5
