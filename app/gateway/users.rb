@@ -17,22 +17,24 @@ class Users < Gateway
     self.class.get("/api/users/#{id}")
   end
 
-  def create(email, password)
+  def create(email, password, role)
     self.class.post(
       '/api/users',
       body: {
         email:    email,
-        password: password
+        password: password,
+        role:     role
       }
     )
   end
 
-  def update(id, email, password)
+  def update(id, email, password, role)
     self.class.patch(
       "/api/users/#{id}",
       body: {
         email:    email,
-        password: password
+        password: password,
+        role:     role
       }
     )
   end

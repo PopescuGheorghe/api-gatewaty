@@ -23,9 +23,10 @@ module Api
     end
 
     def create
-      user_email    = params[:email]
-      user_password = params[:password]
-      response = @user.create(user_email, user_password)
+      user_email    = user_params[:email]
+      user_password = user_params[:password]
+      user_role     = user_params[:role]
+      response = @user.create(user_email, user_password, user_role)
       render json: response.parsed_response, status: response.code
     end
 
@@ -33,7 +34,8 @@ module Api
       id = params[:id]
       user_email    = params[:email]
       user_password = params[:password]
-      response = @user.update(id, user_email, user_password)
+      user_role     = user_params[:role]
+      response = @user.update(id, user_email, user_password, user_role)
       render json: response.parsed_response, status: response.code
     end
 
@@ -47,6 +49,10 @@ module Api
 
     def set_user
       @user = Users.new(request.headers['Authorization'])
+    end
+
+    def user_params
+      params.permit(:email, :password, :role)
     end
   end
 end

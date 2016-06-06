@@ -61,7 +61,7 @@ describe Api::UsersController, type: :controller do
       password = 'password'
       id = 1
       stub_request(:patch, "#{@base_uri}/api/users/1")
-        .with(body: 'email=email%40example.com&password=password',
+        .with(body: 'email=email%40example.com&password=password&role=',
               headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
 

@@ -43,11 +43,12 @@ RSpec.describe Users do
     it 'calls post /api/users' do
       email = 'email@example.com'
       password = 'password'
+      role = 'admin'
       stub_request(:post, "#{@base_uri}/api/users")
         .with(headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
 
-      response = Users.new(@token).create(email, password)
+      response = Users.new(@token).create(email, password, role)
       expect(response.code).to eq 200
     end
   end
@@ -56,13 +57,14 @@ RSpec.describe Users do
     it 'calls update /api/users/:id' do
       email = 'email@example.com'
       password = 'password'
+      role = nil
       id = 1
       stub_request(:patch, "#{@base_uri}/api/users/1")
-        .with(body: 'email=email%40example.com&password=password',
+        .with(body: 'email=email%40example.com&password=password&role=',
               headers: { 'Authorization' => '1234qwe' })
         .to_return(status: 200, body: '', headers: {})
 
-      response = Users.new(@token).update(id, email, password)
+      response = Users.new(@token).update(id, email, password, role)
       expect(response.code).to eq 200
     end
   end
