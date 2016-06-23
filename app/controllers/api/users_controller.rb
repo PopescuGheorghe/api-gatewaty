@@ -6,6 +6,62 @@ module Api
       authenticate(request.headers['Authorization'])
     end
 
+    swagger_controller :users, "User Management"
+
+    swagger_api :index do
+      summary "Fetches all User items"
+      notes "This lists all the active users"
+      response :ok
+      response :unauthorized
+      response :not_acceptable, "The request you made is not acceptable"
+    end
+
+    swagger_api :me do
+      summary "Fetches current user"
+      response :ok, "Success", :User
+      response :unauthorized
+      response :not_found
+    end
+
+    swagger_api :show do
+      summary "Fetches a single User item"
+      param :path, :id, :required, "User ID"
+      response :ok, "Success", :User
+      response :unauthorized
+      response :not_acceptable
+      response :not_found
+    end
+
+    swagger_api :create do
+      summary "Creates a new User"
+      param :form, :email, :string, :optional, "Email"
+      param :form, :password, :string, :optional, "password"
+      param_list :form, :role, :string, :optional, "Role", [ "admin", "normal" ]
+      response :ok
+      response :unauthorized
+      response :not_acceptable
+    end
+
+    swagger_api :update do
+      summary "Updates an existing User"
+      param :path, :id, :integer, :required, "User Id"
+      param :form, :email, :string, :optional, "Email"
+      param :form, :password, :string, :optional, "password"
+      param_list :form, :role, :string, :optional, "Role", [ "admin", "superadmin", "user" ]
+      response :ok
+      response :unauthorized
+      response :not_found
+      response :not_acceptable
+    end
+
+    swagger_api :destroy do
+      summary "Deletes an existing User item"
+      param :path, :id, :integer, :required, "User Id"
+      response :unauthorized
+      response :not_found
+    end
+
+
     def me
       response = @user.me
       render json: response.parsed_response, status: response.code

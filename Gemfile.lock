@@ -86,6 +86,7 @@ GEM
       byebug (~> 8.0)
       pry (~> 0.10)
     rack (1.6.4)
+    rack-cors (0.4.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.6)
@@ -152,6 +153,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    swagger-docs (0.2.8)
+      activesupport (>= 3, < 5)
+      rails (>= 3, < 5)
     thor (0.19.1)
     thread_safe (0.3.5)
     timecop (0.8.1)
@@ -172,6 +176,7 @@ DEPENDENCIES
   figaro
   httparty
   pry-byebug
+  rack-cors
   rails
   rails-api
   responders (~> 2.0)
@@ -179,6 +184,7 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   spring
+  swagger-docs
   timecop
   webmock
 

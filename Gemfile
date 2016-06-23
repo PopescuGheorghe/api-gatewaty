@@ -9,6 +9,12 @@ gem 'httparty'
 
 gem 'figaro'
 
+# Api Documentation
+gem 'swagger-docs'
+
+# Allow CORS
+gem 'rack-cors', :require => 'rack/cors'
+
 # Use respond_to
 gem 'responders', '~> 2.0'
 
