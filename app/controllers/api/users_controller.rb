@@ -61,7 +61,7 @@ module Api
     end
 
     def clear_cache
-      $redis.del "users"
+      $redis.del("users")
     end
 
     def set_user
