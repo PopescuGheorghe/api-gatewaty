@@ -6,6 +6,14 @@ module Api
       authenticate(request.headers['Authorization'])
     end
 
+    swagger_controller :mails, "mailing service"
+
+    swagger_api :send_email do
+      summary "Send Welcome Email"
+      param :form, :email, :string, :required, "Email"
+      response :unauthorized
+      response :bad_request
+    end
     def send_email
       email = params[:email]
       response = @mailing_service.send_welcome_email(email)

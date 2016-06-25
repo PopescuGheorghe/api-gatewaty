@@ -3,7 +3,7 @@ module Api
   class SessionsController < ApplicationController
     before_action :set_session
 
-    swagger_controller :sessions, "Sessions"
+    swagger_controller :sessions, "Session"
 
     swagger_api :login do
       summary "Login"

@@ -11,10 +11,8 @@ Swagger::Docs::Config.register_apis({
     # add custom attributes to api-docs
     :attributes => {
       :info => {
-        "title" => "Swagger Sample App",
-        "description" => "This is a sample description.",
-        "license" => "Apache 2.0",
-        "licenseUrl" => "http://www.apache.org/licenses/LICENSE-2.0.html"
+        "title" => "API Gateway Documentation",
+        "description" => "by Gheorghe Popescu",
       }
     }
   }
