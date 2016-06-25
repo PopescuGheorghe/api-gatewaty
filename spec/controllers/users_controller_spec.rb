@@ -8,6 +8,18 @@ describe Api::UsersController, type: :controller do
     allow_any_instance_of(Api::UsersController).to receive(:authenticate).and_return true
   end
 
+  context 'network timeout' do
+    it 'does something' do
+      stub_request(:get, "#{@base_uri}/api/users/me")
+        .with(headers: { 'Authorization' => '1234qwe' })
+        .to_timeout
+      get :me
+      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      expect(response.status).to eql 500
+      expect(parsed_response[:errors]).to eql 'execution expired'
+    end
+  end
+
   context 'me' do
     it 'calls get /api/users/me' do
       stub_request(:get, "#{@base_uri}/api/users/me")
