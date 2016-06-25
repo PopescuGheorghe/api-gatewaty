@@ -6,7 +6,7 @@ module Api
       authenticate(request.headers['Authorization'])
     end
 
-    before_action :clear_cache, only: [:create, :update, :destroy]
+    after_action :clear_cache, only: [:create, :update, :destroy]
 
     def me
       response = @user.me
