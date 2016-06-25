@@ -9,14 +9,28 @@ describe Api::UsersController, type: :controller do
   end
 
   context 'network timeout' do
-    it 'does something' do
+    it 'raises error on timeout' do
       stub_request(:get, "#{@base_uri}/api/users/me")
         .with(headers: { 'Authorization' => '1234qwe' })
         .to_timeout
+
       get :me
       parsed_response = JSON.parse(response.body, symbolize_names: true)
+
       expect(response.status).to eql 500
       expect(parsed_response[:errors]).to eql 'execution expired'
+    end
+
+    it 'raises error on connection refused' do
+      stub_request(:get, "#{@base_uri}/api/users/me")
+        .with(headers: { 'Authorization' => '1234qwe' })
+        .to_raise Errno::ECONNREFUSED
+
+      get :me
+      parsed_response = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eql 500
+      expect(parsed_response[:errors]).to eql 'Connection refused - Exception from WebMock'
     end
   end
 
