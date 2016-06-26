@@ -6,14 +6,16 @@ module Api
       authenticate(request.headers['Authorization'])
     end
 
+    after_action :clear_cache, only: [:create, :update, :destroy]
+
     def me
       response = @user.me
       render json: response.parsed_response, status: response.code
     end
 
     def index
-      response = @user.index
-      render json: response.parsed_response, status: response.code
+      response = fetch_users
+      render json: response, status: 200
     end
 
     def show
@@ -46,6 +48,21 @@ module Api
     end
 
     private
+
+    def fetch_users
+      users =  $redis.get("users")
+      if users.nil?
+        users  = @user.index.parsed_response.to_json
+        $redis.set("users", users)
+        # Expire the cache, every 1 hour
+        $redis.expire("users",1.hour.to_i)
+      end
+      JSON.load users
+    end
+
+    def clear_cache
+      $redis.del("users")
+    end
 
     def set_user
       @user = Users.new(request.headers['Authorization'])

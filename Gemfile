@@ -9,6 +9,12 @@ gem 'httparty'
 
 gem 'figaro'
 
+# Redis
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
+gem 'redis-rack-cache'
+
 # Use respond_to
 gem 'responders', '~> 2.0'
 

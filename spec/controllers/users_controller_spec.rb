@@ -54,6 +54,24 @@ describe Api::UsersController, type: :controller do
       get :index
       expect(response.status).to eq 200
     end
+
+    it 'uses cached data if server is not available' do
+      stub_request(:get, "#{@base_uri}/api/users")
+        .with(headers: { 'Authorization' => '1234qwe' })
+        .to_timeout
+
+      get :index
+      expect(response.status).to eq 200
+    end
+
+    it 'returns error if server is down and cached is expired' do
+      stub_request(:get, "#{@base_uri}/api/users")
+        .with(headers: { 'Authorization' => '1234qwe' })
+        .to_timeout
+      $redis.del("users")
+      get :index
+      expect(response.status).to eq 500
+    end
   end
 
   context 'show' do
